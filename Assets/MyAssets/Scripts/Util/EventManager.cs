@@ -10,6 +10,7 @@ public class EventManager : MonoBehaviour
     public static EventManager INSTANCE { get; private set; }
 
     public event Action StartGameListener;
+    public event Action GameOverListener;
 
     private void Awake()
     {
@@ -27,6 +28,12 @@ public class EventManager : MonoBehaviour
     {
         Debug.Log("StartGame Triggered");
         StartGameListener?.Invoke();
+    }
+
+    public void TriggerGameOver(bool win)
+    {
+        Debug.Log("GameOver: win=" + win);
+        GameOverListener?.Invoke();
     }
 }
 
