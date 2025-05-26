@@ -1,0 +1,116 @@
+using System.Collections;
+using System.ComponentModel;
+using UnityEngine;
+
+public class WaveSpawner : MonoBehaviour
+{
+    [SerializeField] private GameObject[] enemyPrefabs;
+    [SerializeField] private Transform[] spawnPoints;
+
+    private int currentWaveIndex = 0;
+    private Wave[] waves;
+
+    [Category("Wave Count")]
+    [SerializeField] private int minWaveCount = 1;
+    [SerializeField] private int maxWaveCount = 2;
+
+    [Category("Wave Duration")]
+    [SerializeField] private int minWaveDuration = 2;
+    [SerializeField] private int maxWaveDuration = 5;
+
+    [Category("Wave Enemy Count")]
+    [SerializeField] private int minWaveEnemyCount = 2;
+    [SerializeField] private int maxWaveEnemyCount = 5;
+
+
+    private enum WaveSpawnerState
+    {
+        SPAWNING,
+        WAITING,
+        FINISHED
+    }
+
+    [SerializeField] private WaveSpawnerState state = WaveSpawnerState.WAITING;
+
+    private void Awake()
+    {
+        GenerateWaves();
+    }
+
+    void Start()
+    {
+        EventManager.INSTANCE.StartGameListener += StartWaves;
+    }
+    
+
+    private void StartWaves()
+    {
+        Debug.Log("Starting wave spawning...");
+        StartCoroutine(SpawnWaves());
+    }
+
+    private IEnumerator SpawnWaves()
+    {
+        state = WaveSpawnerState.SPAWNING;
+
+        while (currentWaveIndex < waves.Length)
+        {
+            Wave wave = waves[currentWaveIndex];
+            Debug.Log($"Spawning Wave {currentWaveIndex + 1}");
+
+            for (int i = 0; i < wave.count; i++)
+            {
+                Instantiate(wave.enemyPrefab, GetRandomSpawnPoint().position, Quaternion.identity);
+                yield return new WaitForSeconds(wave.duration / wave.count);
+            }
+
+            currentWaveIndex++;
+            yield return new WaitForSeconds(1f); // Short delay between waves
+        }
+
+        state = WaveSpawnerState.FINISHED;
+        Debug.Log("All waves spawned.");
+    }
+
+    private Transform GetRandomSpawnPoint()
+    {
+        if (spawnPoints.Length == 0)
+        {
+            throw new System.ArgumentNullException("No spawn points assigned to WaveSpawner.");
+        }
+
+        return spawnPoints[Random.Range(0, spawnPoints.Length)];
+    }
+
+    private GameObject GetRandomEnemyPrefab()
+    {
+        if (enemyPrefabs.Length == 0)
+        {
+            throw new System.ArgumentNullException("No enemyPrefabs assigned to WaveSpawner.");
+        }
+
+        return enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];
+    }
+
+    private void GenerateWaves()
+    {
+        int waveCount = Random.Range(minWaveCount, maxWaveCount + 1);
+        waves = new Wave[waveCount];
+
+        for (int i = 0; i < waveCount; i++)
+        {
+            int duration = Random.Range(minWaveDuration, maxWaveDuration + 1);
+            int enemyCount = Random.Range(minWaveEnemyCount, maxWaveEnemyCount + 1);
+
+            waves[i] = new Wave(GetRandomEnemyPrefab(), duration, enemyCount);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (EventManager.INSTANCE != null)
+        {
+            EventManager.INSTANCE.StartGameListener -= StartWaves;
+        }
+    }
+}
