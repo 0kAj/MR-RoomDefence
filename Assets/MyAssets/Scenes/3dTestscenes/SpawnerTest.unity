@@ -322,12 +322,12 @@ MonoBehaviour:
   - {fileID: 1868374327}
   - {fileID: 1855568920}
   - {fileID: 728016376}
-  minWaveCount: 5
-  maxWaveCount: 7
-  minWaveDuration: 8
-  maxWaveDuration: 12
-  minWaveEnemyCount: 2
-  maxWaveEnemyCount: 5
+  minWaveCount: 1
+  maxWaveCount: 1
+  minWaveDuration: 1
+  maxWaveDuration: 1
+  minWaveEnemyCount: 1
+  maxWaveEnemyCount: 1
 --- !u!1 &1479082522
 GameObject:
   m_ObjectHideFlags: 0

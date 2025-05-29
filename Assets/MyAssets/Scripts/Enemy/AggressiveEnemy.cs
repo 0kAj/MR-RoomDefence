@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using Unity.Mathematics.Geometry;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -38,23 +39,24 @@ public class AggressiveEnemy : MonoBehaviour
             _timeUntilNextCheck = updateInterval;
         }
 
-        _timeUntilNextJump -= Time.fixedDeltaTime;
-
-        if (_timeUntilNextJump <= 0f)
+        if (doRandomJump)
         {
-            // Jump
-            _rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            _timeUntilNextJump = Random.Range(minTimeToJump, maxTimeToJump);
+            _timeUntilNextJump -= Time.fixedDeltaTime;
+            
+            if (_timeUntilNextJump <= 0f)
+            {
+                // Jump
+                _rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                _timeUntilNextJump = Random.Range(minTimeToJump, maxTimeToJump);
+            }
         }
+        
 
         if (_currentTarget)
         {
             Vector3 direction = _currentTarget.transform.position - transform.position;
-            if (direction.magnitude > distanceToTarget)
-            {
-                Vector3 newPosition = transform.position + direction.normalized * (moveSpeed * Time.fixedDeltaTime);
-                _rb.MovePosition(newPosition);
-            }
+            Vector3 newPosition = transform.position + direction.normalized * (moveSpeed * Time.fixedDeltaTime);
+            _rb.MovePosition(newPosition);
         }
     }
 }

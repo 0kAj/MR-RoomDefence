@@ -6,4 +6,14 @@ public class Attackable : MonoBehaviour
     {
         Global.INSTANCE.AddAttackable(gameObject);
     }
+
+    public void SetAttackable()
+    {
+        Global.INSTANCE.AddAttackable(gameObject);
+    }
+
+    public void UnsetAttackable()
+    {
+        Global.INSTANCE.RemoveAttackable(gameObject);
+    }
 }

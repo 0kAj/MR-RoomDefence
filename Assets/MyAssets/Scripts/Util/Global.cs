@@ -38,7 +38,7 @@ public class Global : MonoBehaviour
 
         foreach (var obj in attackables)
         {
-            if (obj == null) continue; // falls zerstört
+            if (!obj) continue;
 
             float dist = Vector3.Distance(fromPosition, obj.transform.position);
             if (dist < shortestDistance)

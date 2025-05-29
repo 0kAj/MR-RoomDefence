@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(Attackable))]
 public class DamageableObject : MonoBehaviour
 {
     [SerializeField] private Healthbar healthbar;
@@ -55,6 +56,7 @@ public class DamageableObject : MonoBehaviour
         {
             _currentHealth = 0;
             EventManager.Instance.TriggerGameOver(false);
+            GetComponent<Attackable>().UnsetAttackable();
             _doDamageCheck = false;
         }
         UpdateHealthbar();
