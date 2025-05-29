@@ -6,8 +6,8 @@ using TMPro;
 
 public class Healthbar : MonoBehaviour
 {
-    public Slider hSlider;
-    public TMP_Text health_txt;
+    [SerializeField] private Slider hSlider;
+    [SerializeField] private TMP_Text healthText;
 
     public int GetMaxHealth()
     {
@@ -23,12 +23,12 @@ public class Healthbar : MonoBehaviour
     {
         hSlider.maxValue = health;
         hSlider.value = health;
-        health_txt.text = health.ToString();
+        healthText.text = health.ToString();
     }
 
     public void SetHealth(int health)
     {
         hSlider.value = health;
-        health_txt.text = health.ToString();
+        healthText.text = health.ToString();
     }
 }

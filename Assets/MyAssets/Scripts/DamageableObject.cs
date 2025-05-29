@@ -10,12 +10,12 @@ public class DamageableObject : MonoBehaviour
     [SerializeField][Tooltip("Schaden pro Gegner")] private int damageAmount = 1;
     [SerializeField][Tooltip("in Sekunden")] private int damageInterval = 1;
 
-    private int currentHealth;
-    private bool doDamageCheck = true;
+    private int _currentHealth;
+    private bool _doDamageCheck = true;
 
     private void Start()
     {
-        currentHealth = maxHealth;
+        _currentHealth = maxHealth;
         UpdateHealthbar();
 
         StartCoroutine(DamageCheck());
@@ -24,7 +24,7 @@ public class DamageableObject : MonoBehaviour
 
     private IEnumerator DamageCheck()
     {
-        while (doDamageCheck)
+        while (_doDamageCheck)
         {
             Collider[] colliders = Physics.OverlapSphere(transform.position, hitRadius);
 
@@ -50,12 +50,12 @@ public class DamageableObject : MonoBehaviour
 
     private void Damage(int amount)
     {
-        currentHealth -= amount;
-        if (currentHealth < 0)
+        _currentHealth -= amount;
+        if (_currentHealth < 0)
         {
-            currentHealth = 0;
-            EventManager.INSTANCE.TriggerGameOver(false);
-            doDamageCheck = false;
+            _currentHealth = 0;
+            EventManager.Instance.TriggerGameOver(false);
+            _doDamageCheck = false;
         }
         UpdateHealthbar();
     }
@@ -63,7 +63,7 @@ public class DamageableObject : MonoBehaviour
     private void UpdateHealthbar()
     {
         healthbar.SetMaxHealth(maxHealth);
-        healthbar.SetHealth(currentHealth);
+        healthbar.SetHealth(_currentHealth);
     }
 
     private void OnDrawGizmosSelected()

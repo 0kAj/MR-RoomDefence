@@ -7,20 +7,20 @@ using UnityEditor;
 
 public class EventManager : MonoBehaviour
 {
-    public static EventManager INSTANCE { get; private set; }
+    public static EventManager Instance { get; private set; }
 
     public event Action StartGameListener;
     public event Action GameOverListener;
 
     private void Awake()
     {
-        if (INSTANCE != null && INSTANCE != this)
+        if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
             return;
         }
 
-        INSTANCE = this;
+        Instance = this;
         DontDestroyOnLoad(gameObject);
     }
 

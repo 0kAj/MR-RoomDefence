@@ -7,8 +7,8 @@ public class WaveSpawner : MonoBehaviour
     [SerializeField] private GameObject[] enemyPrefabs;
     [SerializeField] private Transform[] spawnPoints;
 
-    private int currentWaveIndex = 0;
-    private Wave[] waves;
+    private int _currentWaveIndex = 0;
+    private Wave[] _waves;
 
     [Category("Wave Count")]
     [SerializeField] private int minWaveCount = 1;
@@ -30,7 +30,7 @@ public class WaveSpawner : MonoBehaviour
         FINISHED
     }
 
-    [SerializeField] private WaveSpawnerState state = WaveSpawnerState.WAITING;
+    private WaveSpawnerState _state = WaveSpawnerState.WAITING;
 
     private void Awake()
     {
@@ -39,7 +39,7 @@ public class WaveSpawner : MonoBehaviour
 
     void Start()
     {
-        EventManager.INSTANCE.StartGameListener += StartWaves;
+        EventManager.Instance.StartGameListener += StartWaves;
     }
     
 
@@ -51,12 +51,12 @@ public class WaveSpawner : MonoBehaviour
 
     private IEnumerator SpawnWaves()
     {
-        state = WaveSpawnerState.SPAWNING;
+        _state = WaveSpawnerState.SPAWNING;
 
-        while (currentWaveIndex < waves.Length)
+        while (_currentWaveIndex < _waves.Length)
         {
-            Wave wave = waves[currentWaveIndex];
-            Debug.Log($"Spawning Wave {currentWaveIndex + 1}");
+            Wave wave = _waves[_currentWaveIndex];
+            Debug.Log($"Spawning Wave {_currentWaveIndex + 1}");
 
             for (int i = 0; i < wave.count; i++)
             {
@@ -64,11 +64,11 @@ public class WaveSpawner : MonoBehaviour
                 yield return new WaitForSeconds(wave.duration / wave.count);
             }
 
-            currentWaveIndex++;
+            _currentWaveIndex++;
             yield return new WaitForSeconds(1f); // Short delay between waves
         }
 
-        state = WaveSpawnerState.FINISHED;
+        _state = WaveSpawnerState.FINISHED;
         Debug.Log("All waves spawned.");
     }
 
@@ -95,22 +95,22 @@ public class WaveSpawner : MonoBehaviour
     private void GenerateWaves()
     {
         int waveCount = Random.Range(minWaveCount, maxWaveCount + 1);
-        waves = new Wave[waveCount];
+        _waves = new Wave[waveCount];
 
         for (int i = 0; i < waveCount; i++)
         {
             int duration = Random.Range(minWaveDuration, maxWaveDuration + 1);
             int enemyCount = Random.Range(minWaveEnemyCount, maxWaveEnemyCount + 1);
 
-            waves[i] = new Wave(GetRandomEnemyPrefab(), duration, enemyCount);
+            _waves[i] = new Wave(GetRandomEnemyPrefab(), duration, enemyCount);
         }
     }
 
     private void OnDestroy()
     {
-        if (EventManager.INSTANCE != null)
+        if (EventManager.Instance != null)
         {
-            EventManager.INSTANCE.StartGameListener -= StartWaves;
+            EventManager.Instance.StartGameListener -= StartWaves;
         }
     }
 }
