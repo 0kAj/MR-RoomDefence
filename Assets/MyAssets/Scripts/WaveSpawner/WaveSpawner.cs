@@ -1,5 +1,4 @@
 using System.Collections;
-using System.ComponentModel;
 using UnityEngine;
 
 public class WaveSpawner : MonoBehaviour
@@ -10,15 +9,15 @@ public class WaveSpawner : MonoBehaviour
     private int _currentWaveIndex = 0;
     private Wave[] _waves;
 
-    [Category("Wave Count")]
+    [Header("Wave Count")]
     [SerializeField] private int minWaveCount = 1;
     [SerializeField] private int maxWaveCount = 2;
 
-    [Category("Wave Duration")]
+    [Header("Wave Duration")]
     [SerializeField] private int minWaveDuration = 2;
     [SerializeField] private int maxWaveDuration = 5;
 
-    [Category("Wave Enemy Count")]
+    [Header("Wave Enemy Count")]
     [SerializeField] private int minWaveEnemyCount = 2;
     [SerializeField] private int maxWaveEnemyCount = 5;
 
@@ -60,7 +59,8 @@ public class WaveSpawner : MonoBehaviour
 
             for (int i = 0; i < wave.count; i++)
             {
-                Instantiate(wave.enemyPrefab, GetRandomSpawnPoint().position, Quaternion.identity);
+                GameObject gameObj = Instantiate(wave.enemyPrefab, GetRandomSpawnPoint().position, Quaternion.identity);
+                gameObj.transform.parent = transform;
                 yield return new WaitForSeconds(wave.duration / wave.count);
             }
 
@@ -71,7 +71,8 @@ public class WaveSpawner : MonoBehaviour
         _state = WaveSpawnerState.FINISHED;
         Debug.Log("All waves spawned.");
     }
-
+    
+    
     private Transform GetRandomSpawnPoint()
     {
         if (spawnPoints.Length == 0)

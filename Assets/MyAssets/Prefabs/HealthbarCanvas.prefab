@@ -530,4 +530,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hSlider: {fileID: 7356189892419791010}
-  health_txt: {fileID: 713759632517929163}
+  healthText: {fileID: 713759632517929163}
