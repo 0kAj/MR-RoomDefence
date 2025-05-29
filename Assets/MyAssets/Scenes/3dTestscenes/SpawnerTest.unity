@@ -316,18 +316,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefabs:
+  - {fileID: 465272675914817116, guid: 5fb4db4340b40a0438c7269806c2c086, type: 3}
+  - {fileID: 7000992652034362250, guid: e144048e306cd264ca7b3be2c96cf915, type: 3}
   - {fileID: 8643914336843904487, guid: da37afee64798cb438ae79c91e2cf84a, type: 3}
   spawnPoints:
   - {fileID: 1479082523}
   - {fileID: 1868374327}
   - {fileID: 1855568920}
   - {fileID: 728016376}
-  minWaveCount: 1
-  maxWaveCount: 1
+  minWaveCount: 5
+  maxWaveCount: 7
   minWaveDuration: 1
   maxWaveDuration: 1
-  minWaveEnemyCount: 1
-  maxWaveEnemyCount: 1
+  minWaveEnemyCount: 3
+  maxWaveEnemyCount: 5
 --- !u!1 &1479082522
 GameObject:
   m_ObjectHideFlags: 0
