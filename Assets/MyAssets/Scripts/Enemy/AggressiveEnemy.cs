@@ -6,6 +6,7 @@ public class AggressiveEnemy : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 4f;
     [SerializeField] private float updateInterval = 0.5f;
+    [SerializeField] private float distanceToTarget = 2f;
 
     [Header("Jumping")]
     [SerializeField] private bool doRandomJump = false;
@@ -48,9 +49,12 @@ public class AggressiveEnemy : MonoBehaviour
 
         if (_currentTarget)
         {
-            Vector3 direction = (_currentTarget.transform.position - transform.position).normalized;
-            Vector3 newPosition = transform.position + direction * (moveSpeed * Time.fixedDeltaTime);
-            _rb.MovePosition(newPosition);
+            Vector3 direction = _currentTarget.transform.position - transform.position;
+            if (direction.magnitude > distanceToTarget)
+            {
+                Vector3 newPosition = transform.position + direction.normalized * (moveSpeed * Time.fixedDeltaTime);
+                _rb.MovePosition(newPosition);
+            }
         }
     }
 }
