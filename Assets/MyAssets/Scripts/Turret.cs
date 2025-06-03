@@ -57,6 +57,7 @@ public class Turret : MonoBehaviour
         if (bullet != null && firePoint != null)
         {
             GameObject newBullet = Instantiate(bullet, firePoint.position, Quaternion.identity);
+            newBullet.transform.SetParent(firePoint);
 
             Vector3 direction = (target.position - firePoint.position).normalized;
 
