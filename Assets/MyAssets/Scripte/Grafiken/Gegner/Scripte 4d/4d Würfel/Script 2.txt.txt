@@ -1,0 +1,118 @@
+import bpy
+import math
+from itertools import product, combinations
+import mathutils
+
+# ---------- Parameter ----------
+frames = 100
+rotation_speed = 2 * math.pi / frames
+projection_distance = 3.0
+point_radius = 0.07
+edge_thickness = 0.03
+
+# ---------- Funktionen ----------
+
+def rotate_4d(p, angle, axis1, axis2):
+    a, b = p[axis1], p[axis2]
+    c, s = math.cos(angle), math.sin(angle)
+    p = list(p)
+    p[axis1] = a * c - b * s
+    p[axis2] = a * s + b * c
+    return tuple(p)
+
+def project_to_3d(p4, distance=3.0):
+    x, y, z, w = p4
+    factor = 1 / (distance - w)
+    return (x * factor, y * factor, z * factor)
+
+def is_edge(p1, p2):
+    return sum(a != b for a, b in zip(p1, p2)) == 1
+
+def create_edge_box(p1, p2, thickness=0.05, name="EdgeBox"):
+    start = mathutils.Vector(p1)
+    end = mathutils.Vector(p2)
+    center = (start + end) / 2
+    direction = end - start
+    length = direction.length
+
+    bpy.ops.mesh.primitive_cube_add(size=1)
+    obj = bpy.context.object
+    obj.name = name
+    obj.scale = (thickness, thickness, length / 2)
+
+    up = mathutils.Vector((0, 0, 1))
+    quat = up.rotation_difference(direction.normalized())
+    obj.rotation_mode = 'QUATERNION'
+    obj.rotation_quaternion = quat
+    obj.location = center
+
+    return obj
+
+# ---------- Vorbereitungen ----------
+
+# Szene leeren
+bpy.ops.object.select_all(action='SELECT')
+bpy.ops.object.delete(use_global=False)
+
+# 4D-Tesserakt-Ecken
+vertices_4d = [p for p in product([-1, 1], repeat=4)]
+edges = [(i, j) for i, j in combinations(range(len(vertices_4d)), 2) if is_edge(vertices_4d[i], vertices_4d[j])]
+
+# ---------- Ecken als Kugeln ----------
+spheres = []
+for p4 in vertices_4d:
+    p3 = project_to_3d(p4, projection_distance)
+    bpy.ops.mesh.primitive_uv_sphere_add(radius=point_radius, location=p3)
+    spheres.append(bpy.context.object)
+
+# ---------- Kanten als Quader ----------
+edge_objects = []
+for idx, (i, j) in enumerate(edges):
+    p1 = project_to_3d(vertices_4d[i], projection_distance)
+    p2 = project_to_3d(vertices_4d[j], projection_distance)
+    obj = create_edge_box(p1, p2, thickness=edge_thickness, name=f"Edge_{i}_{j}")
+    edge_objects.append((obj, i, j))
+
+# ---------- Animation ----------
+for frame in range(frames):
+    angle = frame * rotation_speed
+    new_positions = []
+
+    # Rotation + Projektion
+    for p4 in vertices_4d:
+        p_rot = rotate_4d(p4, angle, 0, 3)
+        p_rot = rotate_4d(p_rot, angle, 1, 2)
+        pos = project_to_3d(p_rot, projection_distance)
+        new_positions.append(pos)
+
+    # Ecken bewegen
+    for i, pos in enumerate(new_positions):
+        spheres[i].location = pos
+        spheres[i].keyframe_insert(data_path="location", frame=frame)
+
+    # Kanten (Quader) neu ausrichten
+    for obj, i1, i2 in edge_objects:
+        p1 = mathutils.Vector(new_positions[i1])
+        p2 = mathutils.Vector(new_positions[i2])
+        center = (p1 + p2) / 2
+        direction = p2 - p1
+        length = direction.length
+
+        # Skalierung anpassen
+        obj.scale = (edge_thickness, edge_thickness, length / 2)
+
+        # Rotation anpassen
+        up = mathutils.Vector((0, 0, 1))
+        quat = up.rotation_difference(direction.normalized())
+        obj.rotation_mode = 'QUATERNION'
+        obj.rotation_quaternion = quat
+
+        # Position anpassen
+        obj.location = center
+
+        # Keyframes setzen
+        obj.keyframe_insert(data_path="location", frame=frame)
+        obj.keyframe_insert(data_path="rotation_quaternion", frame=frame)
+        obj.keyframe_insert(data_path="scale", frame=frame)
+
+print("✅ Tesserakt mit dicken Kanten als Quader animiert!")
