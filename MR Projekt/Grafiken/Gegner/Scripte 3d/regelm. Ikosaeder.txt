@@ -1,0 +1,81 @@
+import bpy
+import mathutils
+import math
+
+# Szene leeren
+bpy.ops.object.select_all(action='SELECT')
+bpy.ops.object.delete(use_global=False)
+
+# Goldener Schnitt (φ)
+phi = (1 + math.sqrt(5)) / 2
+
+# Eckpunkte eines regelmäßigen Oktaeders (zentriert am Ursprung)
+vertices = [
+    mathutils.Vector(( -1,  phi,  0)),
+    mathutils.Vector((  1,  phi,  0)),
+    mathutils.Vector(( -1, -phi,  0)),
+    mathutils.Vector((  1, -phi,  0)),
+
+    mathutils.Vector((  0, -1,  phi)),
+    mathutils.Vector((  0,  1,  phi)),
+    mathutils.Vector((  0, -1, -phi)),
+    mathutils.Vector((  0,  1, -phi)),
+
+    mathutils.Vector((  phi,  0, -1)),
+    mathutils.Vector((  phi,  0,  1)),
+    mathutils.Vector(( -phi,  0, -1)),
+    mathutils.Vector(( -phi,  0,  1)),
+]
+
+# Kanten des Oktaeders (je zwei verbundene Eckpunkt-Indizes)
+edges = [
+    (0, 1), (0, 5), (0, 7), (0, 10), (0, 11),
+    (1, 5), (1, 7), (1, 8), (1, 9),
+    (2, 3), (2, 4), (2, 6), (2, 10), (2, 11),
+    (3, 4), (3, 6), (3, 8), (3, 9),
+    (4, 5), (4, 9), (4, 11),
+    (5, 9), (5, 11),
+    (6, 7), (6, 8), (6, 10),
+    (7, 8), (7, 10),
+    (8, 9),
+    (10, 11),
+]
+
+
+# Parameter
+sphere_radius = 0.15
+edge_width = 0.08
+
+# Funktion zum Erstellen einer Kugel
+def create_sphere(location, radius, name="Sphere"):
+    bpy.ops.mesh.primitive_uv_sphere_add(radius=radius, location=location)
+    sphere = bpy.context.object
+    sphere.name = name
+    return sphere
+
+# Funktion zum Erstellen eines Quaders (Kante) zwischen zwei Punkten
+def create_edge(start, end, width=0.05, name="Edge"):
+    direction = end - start
+    length = direction.length
+    mid = (start + end) / 2
+    bpy.ops.mesh.primitive_cube_add(size=1, location=mid)
+    edge = bpy.context.object
+    edge.name = name
+
+    # Skalieren und Ausrichten
+    edge.scale = (width, width, length / 2)
+    direction = direction.normalized()
+    rot_quat = direction.to_track_quat('Z', 'Y')
+    edge.rotation_mode = 'QUATERNION'
+    edge.rotation_quaternion = rot_quat
+    return edge
+
+# Ecken als Kugeln erstellen
+for i, v in enumerate(vertices):
+    create_sphere(v, sphere_radius, name=f"Corner_{i}")
+
+# Kanten als Rechtecke erstellen
+for i, (start_idx, end_idx) in enumerate(edges):
+    start = vertices[start_idx]
+    end = vertices[end_idx]
+    create_edge(start, end, edge_width, name=f"Edge_{i}")
