@@ -1,65 +1,58 @@
 using UnityEngine;
+using System.Collections.Generic;
 
-public class RocketLauncher : MonoBehaviour
+public class RaketenSilo : MonoBehaviour
 {
-    public GameObject rocketPrefab;
-    public Transform launchPoint;
-    public float fireRate = 3f;
-    private float fireCooldown;
-    [SerializeField] private float checkRadius = 5f;
-    [SerializeField] private string enemyTag = "Enemy";
+    public GameObject raketenPrefab;         // Prefab der Rakete
+    public Transform feuerpunkt;             // Ort, von dem die Rakete abgefeuert wird
+    public float reichweite = 30f;           // Angriffsreichweite
+    public float feuerrate = 2f;             // Zeit zwischen Abschüssen
+    private float naechsterSchuss = 0f;
 
     void Update()
     {
-        fireCooldown -= Time.deltaTime;
-        if (fireCooldown <= 0f)
+        GameObject ziel = FindeNaechstesZiel();
+
+        if (ziel != null && Time.time >= naechsterSchuss)
         {
-            GameObject target = FindNearestEnemy();
-            if (target != null)
-            {
-                LaunchRocket(target.transform);
-                fireCooldown = fireRate;
-            }
+            SchiesseRakete(ziel);
+            naechsterSchuss = Time.time + feuerrate;
         }
     }
 
-    void LaunchRocket(Transform target)
+    GameObject FindeNaechstesZiel()
     {
-        GameObject rocket = Instantiate(rocketPrefab, launchPoint.position, Quaternion.identity);
-        Rocket rocketScript = rocket.GetComponent<Rocket>();
-        if (rocketScript != null)
-        {
-            rocketScript.SetTarget(target);
-        }
-    }
+        GameObject[] gegner = GameObject.FindGameObjectsWithTag("Enemy");
+        GameObject naechster = null;
+        float kuerzesteEntfernung = Mathf.Infinity;
 
-    private GameObject FindNearestEnemy()
-    {
-        Collider[] hits = Physics.OverlapSphere(transform.position, checkRadius);
-        GameObject nearestEnemy = null;
-        float minDistance = Mathf.Infinity;
-
-        foreach (Collider hit in hits)
+        foreach (GameObject feind in gegner)
         {
-            if (hit.CompareTag(enemyTag))
+            float entfernung = Vector3.Distance(transform.position, feind.transform.position);
+            if (entfernung < kuerzesteEntfernung && entfernung <= reichweite)
             {
-                float distance = Vector3.Distance(transform.position, hit.transform.position);
-                if (distance < minDistance)
-                {
-                    minDistance = distance;
-                    nearestEnemy = hit.gameObject;
-                }
+                kuerzesteEntfernung = entfernung;
+                naechster = feind;
             }
         }
 
-        return nearestEnemy;
+        return naechster;
     }
 
-
-
-    private void OnDrawGizmosSelected()
+    void SchiesseRakete(GameObject ziel)
     {
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(transform.position, checkRadius);
+        GameObject rakete = Instantiate(raketenPrefab, feuerpunkt.position, feuerpunkt.rotation);
+        Rakete raketenScript = rakete.GetComponent<Rakete>();
+        if (raketenScript != null)
+        {
+            Debug.Log("Ziel gesetzt: " + ziel.name);
+            raketenScript.SetZiel(ziel.transform);
+        }
+        else
+        {
+            Debug.LogWarning("Rakete hat kein Rakete-Skript!");
+        }
     }
+
 }
+

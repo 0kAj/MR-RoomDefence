@@ -237,8 +237,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 546827173760656087}
   m_Father: {fileID: 0}
@@ -255,11 +255,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44f6b09f53f2361438e5b04f8ed8216a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 20
-  rotateSpeed: 200
-  explosionRadius: 5
-  damage: 50
-  explosionEffect: {fileID: 9163842254569548763, guid: 3eed43ae6a7284ee4bf43fb2fec8342b, type: 3}
+  geschwindigkeit: 30
+  rotationsgeschwindigkeit: 20
+  lebensdauer: 10
+  raketenOffsetRotation: {x: 0, y: 0, z: 0}
 --- !u!54 &4793578879152715251
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -283,7 +282,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -302,12 +301,12 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 1.5
+  m_Radius: 2
+  m_Height: 3
   m_Direction: 1
   m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1 &3649369866072132412

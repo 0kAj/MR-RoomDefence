@@ -108,11 +108,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 332d2254777ac094487a718deee62da2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rocketPrefab: {fileID: 0}
-  launchPoint: {fileID: 3209602779794660356}
-  fireRate: 3
-  checkRadius: 5
-  enemyTag: Enemy
+  raketenPrefab: {fileID: 3495823483310619789, guid: 3ee09b76a3bb54143b9e5a6c43d9388c, type: 3}
+  feuerpunkt: {fileID: 3209602779794660356}
+  reichweite: 30
+  feuerrate: 2
 --- !u!65 &4229045770749518433
 BoxCollider:
   m_ObjectHideFlags: 0
