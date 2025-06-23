@@ -9,6 +9,8 @@ public class Global : MonoBehaviour
     private List<GameObject> attackables = new List<GameObject>();
     private List<Transform> spawnpoints = new List<Transform>();
 
+    private List<Transform> enemies = new List<Transform>();
+
     private void Awake()
     {
         if (INSTANCE != null && INSTANCE != this)
@@ -70,4 +72,36 @@ public class Global : MonoBehaviour
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+
+
+    public void AddEnemy(Transform enemy)
+    {
+        enemies.Add(enemy);
+    }
+
+    public void RemoveEnemy(Transform enemy)
+    {
+        enemies.Remove(enemy);
+    }
+
+    public Transform GetNearestEnemy(Vector3 fromPosition)
+    {
+        Transform nearest = null;
+        float shortestDistance = Mathf.Infinity;
+
+        foreach (var obj in enemies)
+        {
+            if (!obj) continue;
+
+            float dist = Vector3.Distance(fromPosition, obj.transform.position);
+            if (dist < shortestDistance)
+            {
+                shortestDistance = dist;
+                nearest = obj;
+            }
+        }
+
+        return nearest;
+    }
+
 }

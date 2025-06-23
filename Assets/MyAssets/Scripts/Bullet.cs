@@ -14,7 +14,7 @@ public class Bullet : MonoBehaviour
     private IEnumerator DestroyTimer()
     {
         yield return new WaitForSeconds(2);
-        Destroy(this.gameObject);
+        Destroy(gameObject);
     }
 
     private void OnCollisionEnter(Collision collision)
