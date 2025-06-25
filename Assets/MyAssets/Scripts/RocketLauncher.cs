@@ -1,65 +1,29 @@
 using UnityEngine;
+using System.Collections.Generic;
+using System.Collections;
 
 public class RocketLauncher : MonoBehaviour
 {
-    public GameObject rocketPrefab;
-    public Transform launchPoint;
-    public float fireRate = 3f;
-    private float fireCooldown;
-    [SerializeField] private float checkRadius = 5f;
-    [SerializeField] private string enemyTag = "Enemy";
+    public GameObject raketenPrefab;         // Prefab der Rakete
+    public Transform feuerpunkt;             // Ort, von dem die Rakete abgefeuert wird
+    public float shootInterval = 2f;             // Zeit zwischen Abschüssen
+    [SerializeField][Tooltip("In Sekunden")] private float naechsterSchuss = 5f;
 
-    void Update()
+    void Start()
     {
-        fireCooldown -= Time.deltaTime;
-        if (fireCooldown <= 0f)
-        {
-            GameObject target = FindNearestEnemy();
-            if (target != null)
-            {
-                LaunchRocket(target.transform);
-                fireCooldown = fireRate;
-            }
-        }
+        EventManager.Instance.StartGameListener += StartWave;
     }
 
-    void LaunchRocket(Transform target)
+    void StartWave()
     {
-        GameObject rocket = Instantiate(rocketPrefab, launchPoint.position, Quaternion.identity);
-        Rocket rocketScript = rocket.GetComponent<Rocket>();
-        if (rocketScript != null)
-        {
-            rocketScript.SetTarget(target);
-        }
+        StartCoroutine(Shoot());
     }
 
-    private GameObject FindNearestEnemy()
+    private IEnumerator Shoot()
     {
-        Collider[] hits = Physics.OverlapSphere(transform.position, checkRadius);
-        GameObject nearestEnemy = null;
-        float minDistance = Mathf.Infinity;
-
-        foreach (Collider hit in hits)
-        {
-            if (hit.CompareTag(enemyTag))
-            {
-                float distance = Vector3.Distance(transform.position, hit.transform.position);
-                if (distance < minDistance)
-                {
-                    minDistance = distance;
-                    nearestEnemy = hit.gameObject;
-                }
-            }
-        }
-
-        return nearestEnemy;
-    }
-
-
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(transform.position, checkRadius);
+        yield return new WaitForSeconds(shootInterval);
+        Instantiate(raketenPrefab, feuerpunkt.position, feuerpunkt.rotation);
+        yield return Shoot();
     }
 }
+

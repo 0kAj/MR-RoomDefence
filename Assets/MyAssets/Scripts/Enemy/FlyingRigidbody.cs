@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Rigidbody), typeof(IAmEnemy))]
 public class FlyingRigidbody : MonoBehaviour
 {
     [SerializeField] private float distanceToFloor = 1.5f;

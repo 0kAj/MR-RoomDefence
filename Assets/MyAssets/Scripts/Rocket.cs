@@ -1,77 +1,57 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class Rocket : MonoBehaviour
 {
-    public float speed = 20f;
-    public float rotateSpeed = 200f;
-    public float explosionRadius = 5f;
-    public float damage = 50f;
-    public GameObject explosionEffect;
+    public float geschwindigkeit = 5f;
+    public float lebensdauer = 10f;
 
-    private Transform target;
-    private Rigidbody rb;
-
-    void Start()
+    public Transform GetZiel()
     {
-        rb = GetComponent<Rigidbody>();
-        rb.useGravity = false;
-
-        // Initialer Impuls nach oben
-        rb.linearVelocity = Vector3.up * 10f;
-        Invoke(nameof(ActivateHoming), 0.5f); // nach kurzer Zeit Zielverfolgung aktivieren
+        return Global.INSTANCE.GetNearestEnemy(transform.position);
     }
 
-    public void SetTarget(Transform newTarget)
+    void FixedUpdate()
     {
-        target = newTarget;
-    }
 
-    void ActivateHoming()
-    {
-        StartCoroutine(Homing());
-    }
-
-    System.Collections.IEnumerator Homing()
-    {
-        while (target != null)
+        Transform ziel = GetZiel();
+        if (ziel == null)
         {
-            Vector3 direction = (target.position - transform.position).normalized;
-
-            // Rotation zur Zielrichtung
-            Quaternion targetRotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
-
-            // Bewegung nach vorne
-            rb.linearVelocity = transform.forward * speed;
-
-            yield return null;
-        }
-    }
-
-    void OnCollisionEnter(Collision collision)
-    {
-        Explode();
-    }
-
-    void Explode()
-    {
-        if (explosionEffect != null)
-        {
-            Instantiate(explosionEffect, transform.position, Quaternion.identity);
+            Destroy(gameObject);
+            return;
         }
 
-        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
-        foreach (Collider nearby in colliders)
-        {
-            Rigidbody rb = nearby.GetComponent<Rigidbody>();
-            if (rb != null)
-                rb.AddExplosionForce(700f, transform.position, explosionRadius);
+        Debug.DrawLine(transform.position, ziel.position);
+        // Zielrotation zur Richtung
+        transform.LookAt(ziel.position);
 
-            //Health hp = nearby.GetComponent<Health>();
-            //if (hp != null)
-            //    hp.TakeDamage(damage);
-        }
+        // Bewegung nach vorne
+        Vector3 direction = ziel.position - transform.position;
+        transform.position += direction * geschwindigkeit * Time.fixedDeltaTime;
+    }
 
+
+    private void Start()
+    {
+        StartCoroutine(DestroyTimer());
+    }
+
+    private IEnumerator DestroyTimer()
+    {
+        yield return new WaitForSeconds(2);
         Destroy(gameObject);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision == null) return;
+        if (collision.collider == null) return;
+        if (!collision.gameObject.activeInHierarchy) return;
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            //despawn enemy
+            Destroy(collision.gameObject);
+            Destroy(gameObject);
+        }
     }
 }

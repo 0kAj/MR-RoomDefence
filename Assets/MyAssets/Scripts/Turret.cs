@@ -13,6 +13,9 @@ public class Turret : MonoBehaviour
     [SerializeField] private float checkRadius = 5f;
     [SerializeField] private string enemyTag = "Enemy";
 
+    [Header("Turret Head")]
+    [SerializeField] private GameObject head;
+
     private float shootTimer;
 
     void Update()
@@ -24,6 +27,7 @@ public class Turret : MonoBehaviour
             GameObject target = FindNearestEnemy();
             if (target != null)
             {
+                head.transform.LookAt(target.transform.position);
                 Shoot(target.transform);
                 shootTimer = 0f;
             }
