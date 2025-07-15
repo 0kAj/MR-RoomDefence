@@ -358,10 +358,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8263728292075965547, guid: 85ce57401ae5a6e47bf2f5139dd4cc44, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5190c8ed4233b0748b33d259002e8bd5, type: 2}
     - target: {fileID: -7700253880043154037, guid: 85ce57401ae5a6e47bf2f5139dd4cc44, type: 3}
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: -7573327012955081593, guid: 85ce57401ae5a6e47bf2f5139dd4cc44, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5190c8ed4233b0748b33d259002e8bd5, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 85ce57401ae5a6e47bf2f5139dd4cc44, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 3328f2ca60d4b4546860a37071899b7f, type: 2}
     - target: {fileID: -5405020446807899027, guid: 85ce57401ae5a6e47bf2f5139dd4cc44, type: 3}
       propertyPath: m_Layer
       value: 9
@@ -382,6 +394,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 4099836605280165885, guid: 85ce57401ae5a6e47bf2f5139dd4cc44, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5190c8ed4233b0748b33d259002e8bd5, type: 2}
+    - target: {fileID: 4505145666998363972, guid: 85ce57401ae5a6e47bf2f5139dd4cc44, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5190c8ed4233b0748b33d259002e8bd5, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -470,6 +490,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 7b77e04d144511b4288fcb2ee56ed42a, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 3328f2ca60d4b4546860a37071899b7f, type: 2}
     - target: {fileID: -6617727074767417042, guid: 7b77e04d144511b4288fcb2ee56ed42a, type: 3}
       propertyPath: m_Layer
       value: 9
@@ -478,6 +502,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: -641265805402451953, guid: 7b77e04d144511b4288fcb2ee56ed42a, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 3705d87038b69684f8caeb5b353db134, type: 2}
     - target: {fileID: 919132149155446097, guid: 7b77e04d144511b4288fcb2ee56ed42a, type: 3}
       propertyPath: m_Name
       value: Kannonenkopf
@@ -490,10 +518,22 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 4635246621901234822, guid: 7b77e04d144511b4288fcb2ee56ed42a, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 3705d87038b69684f8caeb5b353db134, type: 2}
+    - target: {fileID: 5497875739640648075, guid: 7b77e04d144511b4288fcb2ee56ed42a, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 3705d87038b69684f8caeb5b353db134, type: 2}
     - target: {fileID: 6027403045761596125, guid: 7b77e04d144511b4288fcb2ee56ed42a, type: 3}
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 8931392800978637887, guid: 7b77e04d144511b4288fcb2ee56ed42a, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 3705d87038b69684f8caeb5b353db134, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
