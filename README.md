@@ -1,39 +1,41 @@
 # MR-RoomDefence 🔫🛡️  
-*Ein Mixed-Reality Tower Defense Spiel für die Meta Quest 3*  
-Entwickelt im Rahmen des außercurricularen Kurses **„Immersive Realitäten“** an der **Hochschule Hamm-Lippstadt (HSHL)**
+*A mixed-reality tower defense game for the Meta Quest 3* 
+Developed as part of the extracurricular course **“Immersive Realities ”** at the **Hochschule Hamm-Lippstadt (HSHL)**
 
-## 📌 Projektbeschreibung  
-In **MR-RoomDefence** verteidigst du einen zentralen Kristall gegen angreifende Gegner – direkt in deinem physischen Raum.  
-Platziere interaktive Türme, greife selbst zur Waffe und nutze deine Umgebung strategisch aus, um den Kristall zu beschützen.  
-Die Spielmechanik verbindet klassische Tower-Defense-Elemente mit immersiver MR-Technologie.
+## 📌 Project description 
+In **MR-RoomDefence** you defend a central crystal against attacking enemies - directly in your physical room.  
+Place interactive towers, take up arms yourself and use your surroundings strategically to protect the crystal.  
+The game mechanics combine classic tower defense elements with immersive MR technology.
 
-> Mixed Reality + aktives Gameplay = neue Dimension der Immersion.
+> Mixed reality + active gameplay = new dimension of immersion.
 
-## 🧰 Technologien  
-- Unity 6  
+## 🧰 Technologies  
+- Unity 6 
 - Meta XR SDK  
 - Meta Building Blocks  
-- Zielplattform: Meta Quest 3
+- Target platform: Meta Quest 3
 
 ## 🚀 Installation  
-1. [APK aus dem Release-Bereich herunterladen](https://github.com/0kAj/MR-RoomDefence/releases)  
-2. Auf die Meta Quest 3 installieren über ADB
-	```bash
-   adb install MR-RoomDefence.apk
-   ```
-3. Im Headset starten und direkt losspielen
+1. download [APK from the release area](https://github.com/0kAj/MR-RoomDefence/releases)  
+2. install on Meta Quest 3 via ADB
+```bash
+ adb install MR-RoomDefence.apk
+ ```
+3. start in the headset and start playing directly
 
-## 🕹️ Steuerung  
-Die Steuerung wird direkt im Spiel erklärt.  
-Keine externe Anleitung nötig – das Spiel führt intuitiv durch alle Mechaniken.
+## 🕹️ Controls 
+The controls are explained directly in the game.  
+No external instructions necessary - the game guides you intuitively through all the mechanics.
 
-## 🔮 Zukünftige Erweiterungen  
-- Zusätzliche Gegnertypen und Schwierigkeitsstufen  
-- Erweiterte Partikeleffekte  
-- Neue Spielmodi und Interaktionen
+## 🔮 Future expansions  
+- Additional enemy types and difficulty levels  
+- Extended particle effects  
+- New game modes and interactions
 
-## 👥 Team  
-Dieses Projekt wurde von Studierenden der HSHL gemeinsam im Team entwickelt.
+## 👥 Team 
+This project was developed by HSHL students as a team.
 
-## 📄 Lizenz  
-Standardlizenz (MIT).
+## 📄 License 
+Standard license (MIT).
+
+Translated with DeepL.com (free version)
