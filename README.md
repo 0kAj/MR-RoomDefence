@@ -37,5 +37,3 @@ This project was developed by HSHL students as a team.
 
 ## 📄 License 
 Standard license (MIT).
-
-Translated with DeepL.com (free version)
