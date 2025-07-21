@@ -1,10 +1,10 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class WaveSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject[] enemyPrefabs;
-    [SerializeField] private Transform[] spawnPoints;
 
     private int _currentWaveIndex = 0;
     private Wave[] _waves;
@@ -40,7 +40,7 @@ public class WaveSpawner : MonoBehaviour
     {
         EventManager.Instance.StartGameListener += StartWaves;
     }
-    
+
 
     private void StartWaves()
     {
@@ -71,16 +71,17 @@ public class WaveSpawner : MonoBehaviour
         _state = WaveSpawnerState.FINISHED;
         Debug.Log("All waves spawned.");
     }
-    
-    
+
+
     private Transform GetRandomSpawnPoint()
     {
-        if (spawnPoints.Length == 0)
+        List<Transform> spawnPoints = Global.INSTANCE.GetSpawnPoints();
+        if (spawnPoints.Count == 0)
         {
             throw new System.ArgumentNullException("No spawn points assigned to WaveSpawner.");
         }
 
-        return spawnPoints[Random.Range(0, spawnPoints.Length)];
+        return spawnPoints[Random.Range(0, spawnPoints.Count)];
     }
 
     private GameObject GetRandomEnemyPrefab()
