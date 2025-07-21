@@ -34,6 +34,3 @@ No external instructions necessary - the game guides you intuitively through all
 
 ## 👥 Team 
 This project was developed by HSHL students as a team.
-
-## 📄 License 
-Standard license (MIT).
