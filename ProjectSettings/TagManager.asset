@@ -5,6 +5,15 @@ TagManager:
   serializedVersion: 3
   tags:
   - Enemy
+  - QDSUIBorderlessButton
+  - QDSUIIcon
+  - QDSUISharedThemeColor
+  - QDSUIDestructiveButton
+  - QDSUISecondaryButton
+  - QDSUIPrimaryButton
+  - QDSUIAccentColor
+  - QDSUITextInvertedColor
+  - QDSUITextSecondaryInvertedColor
   layers:
   - Default
   - TransparentFX
@@ -37,7 +46,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - OVROverlayCanvas Rendering
   m_SortingLayers:
   - name: Default
     uniqueID: 0
