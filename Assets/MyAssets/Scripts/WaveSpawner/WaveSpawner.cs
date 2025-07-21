@@ -70,6 +70,7 @@ public class WaveSpawner : MonoBehaviour
 
         _state = WaveSpawnerState.FINISHED;
         Debug.Log("All waves spawned.");
+        EventManager.Instance.TriggerGameOver(true);
     }
 
 

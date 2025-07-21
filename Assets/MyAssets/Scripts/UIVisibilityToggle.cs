@@ -33,5 +33,11 @@ public class UIVisibilityToggle : MonoBehaviour
         isVisible = false;
         uiRoot.SetActive(false);
     }
+    
+    public void ShowUI()
+    {
+        isVisible = true;
+        uiRoot.SetActive(true);
+    }
 
 }

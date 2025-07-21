@@ -8,7 +8,9 @@ using UnityEditor;
 public class EventManager : MonoBehaviour
 {
     public static EventManager Instance { get; private set; }
-
+    
+    public bool has_win = false;
+    
     public event Action StartGameListener;
     public event Action GameOverListener;
 
@@ -33,6 +35,7 @@ public class EventManager : MonoBehaviour
     public void TriggerGameOver(bool win)
     {
         Debug.Log("GameOver: win=" + win);
+        has_win = win;
         GameOverListener?.Invoke();
     }
 }
