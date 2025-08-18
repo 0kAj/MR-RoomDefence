@@ -6,20 +6,20 @@ public class UIVisibilityToggle : MonoBehaviour
 
     private bool isVisible = true;
 
-    void Update()
-    {
+    //void Update()
+    //{
         // Beispiel: Toggle bei Tastendruck (auf PC: Taste "X")
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            ToggleUI();
-        }
+        //if (Input.GetKeyDown(KeyCode.X))
+        //{
+        //    ToggleUI();
+        //}
 
         // Beispiel: Toggle über Oculus Touch Controller (Button A)
-        if (OVRInput.GetDown(OVRInput.Button.One)) // "A"-Button rechts
-        {
-            ToggleUI();
-        }
-    }
+        //if (OVRInput.GetDown(OVRInput.Button.One)) // "A"-Button rechts
+        //{
+        //    ToggleUI();
+        //}
+    //}
 
     public void ToggleUI()
     {
