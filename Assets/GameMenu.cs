@@ -8,12 +8,20 @@ public class GameMenu : MonoBehaviour
 
     void Start()
     {
-        EventManager.Instance.StartGameListener += () => GetComponent<UIVisibilityToggle>().HideUI();
+        EventManager.Instance.StartGameListener += GetComponent<UIVisibilityToggle>().HideUI;
 
         EventManager.Instance.GameOverListener += GameOver;
 
         GetComponent<UIVisibilityToggle>().HideUI();
 
+
+    }
+
+    void OnDestroy()
+    {
+        EventManager.Instance.StartGameListener -= GetComponent<UIVisibilityToggle>().HideUI;
+
+        EventManager.Instance.GameOverListener -= GameOver;
 
     }
 

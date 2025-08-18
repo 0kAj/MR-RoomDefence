@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Video;
 
 public class WaveSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject[] enemyPrefabs;
 
     private int _currentWaveIndex = 0;
+
+    private bool _isSpawning = false;
     private Wave[] _waves;
 
     [Header("Wave Count")]
@@ -21,6 +24,7 @@ public class WaveSpawner : MonoBehaviour
     [SerializeField] private int minWaveEnemyCount = 2;
     [SerializeField] private int maxWaveEnemyCount = 5;
 
+    private Coroutine _waveCoroutine;
 
     private enum WaveSpawnerState
     {
@@ -39,40 +43,77 @@ public class WaveSpawner : MonoBehaviour
     void Start()
     {
         EventManager.Instance.StartGameListener += StartWaves;
+        EventManager.Instance.GameOverListener += StopWaves;
+    }
+
+    private void OnDestroy()
+    {
+        EventManager.Instance.StartGameListener -= StartWaves;
+        EventManager.Instance.GameOverListener -= StopWaves;
     }
 
 
     private void StartWaves()
     {
+        if (_waveCoroutine != null)
+        {
+            StopCoroutine(_waveCoroutine);
+        }
+
+        _isSpawning = true;
+        _currentWaveIndex = 0;
         Debug.Log("Starting wave spawning...");
-        StartCoroutine(SpawnWaves());
+        _waveCoroutine = StartCoroutine(SpawnWaves());
+    }
+
+    private void StopWaves()
+    {
+        if (_waveCoroutine != null)
+        {
+            StopCoroutine(_waveCoroutine);
+            _waveCoroutine = null;
+        }
+
+        _isSpawning = false;
+        Debug.Log("Wave spawning stopped.");
     }
 
     private IEnumerator SpawnWaves()
     {
-        _state = WaveSpawnerState.SPAWNING;
-
-        while (_currentWaveIndex < _waves.Length)
+        while (_isSpawning)
         {
-            Wave wave = _waves[_currentWaveIndex];
-            Debug.Log($"Spawning Wave {_currentWaveIndex + 1}");
+            _state = WaveSpawnerState.SPAWNING;
 
-            for (int i = 0; i < wave.count; i++)
+            while (_currentWaveIndex < _waves.Length)
             {
-                GameObject gameObj = Instantiate(wave.enemyPrefab, GetRandomSpawnPoint().position, Quaternion.identity);
-                gameObj.transform.parent = transform;
-                yield return new WaitForSeconds(wave.duration / wave.count);
+                Wave wave = _waves[_currentWaveIndex];
+                Debug.Log($"Spawning Wave {_currentWaveIndex + 1}");
+
+                for (int i = 0; i < wave.count; i++)
+                {
+                    GameObject gameObj = Instantiate(
+                        wave.enemyPrefab,
+                        GetRandomSpawnPoint().position,
+                        Quaternion.identity
+                    );
+                    gameObj.transform.parent = transform;
+
+                    yield return new WaitForSeconds(wave.duration / wave.count);
+                }
+
+                _currentWaveIndex++;
+                yield return new WaitForSeconds(1f); // Delay between waves
             }
 
-            _currentWaveIndex++;
-            yield return new WaitForSeconds(1f); // Short delay between waves
+            Debug.Log("All waves spawned. Restarting...");
+
+            _currentWaveIndex = 0;
+            yield return new WaitForSeconds(2f); // Optional delay before loop restarts
         }
 
         _state = WaveSpawnerState.FINISHED;
-        Debug.Log("All waves spawned.");
-        // EventManager.Instance.TriggerGameOver(true);
-        SpawnWaves(); // rerunning Spawning for total Chaos
     }
+
 
 
     private Transform GetRandomSpawnPoint()
@@ -107,14 +148,6 @@ public class WaveSpawner : MonoBehaviour
             int enemyCount = Random.Range(minWaveEnemyCount, maxWaveEnemyCount + 1);
 
             _waves[i] = new Wave(GetRandomEnemyPrefab(), duration, enemyCount);
-        }
-    }
-
-    private void OnDestroy()
-    {
-        if (EventManager.Instance != null)
-        {
-            EventManager.Instance.StartGameListener -= StartWaves;
         }
     }
 }
