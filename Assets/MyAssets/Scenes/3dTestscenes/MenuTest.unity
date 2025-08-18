@@ -2360,7 +2360,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52dd52f00edcf644aabf41d34fe43224, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  handTransform: {fileID: 1416202958}
+  handTransform: {fileID: 1776006137}
   offset: {x: 0, y: 0.1, z: 0.1}
 --- !u!1 &286317772
 GameObject:
@@ -13104,11 +13104,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1600753290}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &1416202958 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2990931759328966195, guid: 1a393ff36bd7dd54cba7ed8f756ef05a, type: 3}
-  m_PrefabInstance: {fileID: 657479875}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1422819847
 GameObject:
   m_ObjectHideFlags: 0
