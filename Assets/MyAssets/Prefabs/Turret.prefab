@@ -145,7 +145,7 @@ MonoBehaviour:
   bullet: {fileID: 2934708091843433519, guid: 1599f2fc4c8b3e64ab0b3e592ad57e45, type: 3}
   bulletSpeed: 20
   firePoint: {fileID: 7006297156844444303}
-  shootInterval: 0.1
+  shootInterval: 0.8
   checkRadius: 5
   enemyTag: Enemy
   head: {fileID: 782771874675422160}
