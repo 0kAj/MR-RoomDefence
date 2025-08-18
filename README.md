@@ -10,8 +10,8 @@ The game mechanics combine classic tower defense elements with immersive MR tech
 > Mixed reality + active gameplay = new dimension of immersion.
 
 ## 🧰 Technologies  
-- Unity 6 
-- Meta XR SDK  
+- [Unity 6](https://unity.com/releases/unity-6)
+- [Meta XR SDK](https://assetstore.unity.com/packages/tools/integration/meta-xr-all-in-one-sdk-269657)
 - Meta Building Blocks  
 - Target platform: Meta Quest 3
 
