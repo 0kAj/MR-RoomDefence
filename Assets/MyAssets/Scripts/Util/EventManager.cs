@@ -8,9 +8,9 @@ using UnityEditor;
 public class EventManager : MonoBehaviour
 {
     public static EventManager Instance { get; private set; }
-    
+
     public bool has_win = false;
-    
+
     public event Action StartGameListener;
     public event Action GameOverListener;
 
@@ -53,6 +53,10 @@ public class EventManagerEditor : Editor
         if (GUILayout.Button("Trigger Start Game"))
         {
             manager.TriggerStartGame();
+        }
+        if (GUILayout.Button("Trigger Game over"))
+        {
+            manager.TriggerGameOver(false);
         }
     }
 }
