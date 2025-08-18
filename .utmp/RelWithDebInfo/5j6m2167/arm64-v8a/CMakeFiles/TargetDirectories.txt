@@ -1,0 +1,5 @@
+C:/workspaces/Unity/MR-RoomDefence/.utmp/RelWithDebInfo/5j6m2167/arm64-v8a/CMakeFiles/edit_cache.dir
+C:/workspaces/Unity/MR-RoomDefence/.utmp/RelWithDebInfo/5j6m2167/arm64-v8a/CMakeFiles/rebuild_cache.dir
+C:/workspaces/Unity/MR-RoomDefence/.utmp/RelWithDebInfo/5j6m2167/arm64-v8a/GameActivity/CMakeFiles/game.dir
+C:/workspaces/Unity/MR-RoomDefence/.utmp/RelWithDebInfo/5j6m2167/arm64-v8a/GameActivity/CMakeFiles/edit_cache.dir
+C:/workspaces/Unity/MR-RoomDefence/.utmp/RelWithDebInfo/5j6m2167/arm64-v8a/GameActivity/CMakeFiles/rebuild_cache.dir
